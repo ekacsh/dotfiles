@@ -26,7 +26,7 @@ setopt inc_append_history
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# fzf (upstream)
+# fzf
 export FZF_BASE="$HOME/.fzf"
 export PATH="$FZF_BASE/bin:$PATH"
 
@@ -43,7 +43,7 @@ else
 fi
 
 # =========================================================
-# zinit plugins (keep this minimal)
+# zinit plugins
 # =========================================================
 
 # Completion
@@ -98,7 +98,7 @@ if command -v starship >/dev/null; then
 fi
 
 # =========================================================
-# Aliases (keep them boring)
+# Aliases
 # =========================================================
 
 alias ll='ls -lah'
