@@ -118,6 +118,10 @@ export LESS='-R -F -X'
 # Enable Ctrl+Backspace
 bindkey '^H' backward-kill-word
 
+# Enable Ctrl+Left/Right to move by word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
 # Load direnv if present
 if command -v direnv >/dev/null; then
   eval "$(direnv hook zsh)"
