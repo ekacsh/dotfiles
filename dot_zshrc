@@ -69,15 +69,9 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # fzf integration
 # =========================================================
 
-if [[ -f "$FZF_BASE/shell/key-bindings.zsh" ]]; then
-  source "$FZF_BASE/shell/key-bindings.zsh"
-fi
+source <(fzf --zsh)
 
-if [[ -f "$FZF_BASE/shell/completion.zsh" ]]; then
-  source "$FZF_BASE/shell/completion.zsh"
-fi
-
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore --ignore-file ~/.rignore'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
@@ -86,7 +80,7 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 # =========================================================
 
 if command -v zoxide >/dev/null; then
-  eval "$(zoxide init zsh)"
+  eval "$(zoxide init zsh --cmd cd)"
 fi
 
 # =========================================================
