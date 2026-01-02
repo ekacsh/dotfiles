@@ -1,0 +1,124 @@
+# =========================================================
+# Basic shell setup
+# =========================================================
+
+export ZDOTDIR="$HOME"
+export PAGER="less"
+
+setopt autocd
+setopt interactivecomments
+setopt extendedglob
+setopt nomatch
+unsetopt beep
+
+# History
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt share_history
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt inc_append_history
+
+# =========================================================
+# PATH
+# =========================================================
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# fzf (upstream)
+export FZF_BASE="$HOME/.fzf"
+export PATH="$FZF_BASE/bin:$PATH"
+
+# =========================================================
+# zinit (plugin manager)
+# =========================================================
+
+export ZINIT_HOME="$HOME/.zinit/bin"
+
+if [[ -f "$ZINIT_HOME/zinit.zsh" ]]; then
+  source "$ZINIT_HOME/zinit.zsh"
+else
+  echo "zinit not found"
+fi
+
+# =========================================================
+# zinit plugins (keep this minimal)
+# =========================================================
+
+# Completion
+zinit light zsh-users/zsh-completions
+
+# Autosuggestions
+zinit light zsh-users/zsh-autosuggestions
+
+# Syntax highlighting (must be last)
+zinit light zsh-users/zsh-syntax-highlighting
+
+# =========================================================
+# Completion system
+# =========================================================
+
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# =========================================================
+# fzf integration
+# =========================================================
+
+if [[ -f "$FZF_BASE/shell/key-bindings.zsh" ]]; then
+  source "$FZF_BASE/shell/key-bindings.zsh"
+fi
+
+if [[ -f "$FZF_BASE/shell/completion.zsh" ]]; then
+  source "$FZF_BASE/shell/completion.zsh"
+fi
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+
+# =========================================================
+# zoxide
+# =========================================================
+
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+# =========================================================
+# starship prompt
+# =========================================================
+
+if command -v starship >/dev/null; then
+  eval "$(starship init zsh)"
+fi
+
+# =========================================================
+# Aliases (keep them boring)
+# =========================================================
+
+alias ll='ls -lah'
+alias gs='git status'
+alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+alias gc='git commit'
+alias gp='git push'
+
+# =========================================================
+# Misc quality-of-life
+# =========================================================
+
+# Better less
+export LESS='-R -F -X'
+
+# Enable Ctrl+Backspace
+bindkey '^H' backward-kill-word
+
+# Load direnv if present
+if command -v direnv >/dev/null; then
+  eval "$(direnv hook zsh)"
+fi
