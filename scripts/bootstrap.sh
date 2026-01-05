@@ -66,6 +66,36 @@ install_zinit() {
   git clone https://github.com/zdharma-continuum/zinit.git "$HOME/.zinit/bin"
 }
 
+install_eza() {
+  if command -v eza >/dev/null 2>&1; then
+    log "eza already installed"
+    return
+  fi
+
+  log "Installing eza (upstream)"
+
+  local arch
+  case "$(uname -m)" in
+    x86_64) arch="x86_64" ;;
+    aarch64) arch="aarch64" ;;
+    *)
+      echo "Unsupported architecture: $(uname -m)" >&2
+      return 1
+      ;;
+  esac
+
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+
+  curl -fsSL \
+    "https://github.com/eza-community/eza/releases/latest/download/eza_${arch}-unknown-linux-gnu.tar.gz" \
+    | tar -xz -C "$tmpdir"
+
+  sudo install -m 0755 "$tmpdir/eza" /usr/local/bin/eza
+
+  rm -rf "$tmpdir"
+}
+
 # Package manager detection and installation
 if command_exists apt; then
   install_with_apt
@@ -79,3 +109,4 @@ install_fzf
 install_zoxide
 install_starship
 install_zinit
+install_eza
