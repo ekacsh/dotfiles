@@ -95,12 +95,31 @@ fi
 # Aliases
 # =========================================================
 
+alias la='ls -A'
 alias ll='ls -lah'
+alias ls='ls --color=auto'
+
 alias gs='git status'
 alias gl='git log --oneline --graph --decorate'
 alias gd='git diff'
 alias gc='git commit'
 alias gp='git push'
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+alias dps='docker ps'
+alias dc='docker compose'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dcl='docker compose logs -f'
+
+alias da='direnv allow'
 
 # =========================================================
 # Misc quality-of-life
